@@ -116,21 +116,21 @@ const RaceLeaderboard = () => {
                 {entry.picks.map((pick) => (
                   <div
                     key={pick.tier}
-                    className="bg-gray-800 rounded p-2 flex items-center justify-between"
+                    className="bg-gray-800 rounded p-2"
                     style={{
                       borderLeft: `4px solid ${pick.driver.primary_color}`,
                     }}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="text-gray-500 text-xs uppercase mb-1">
+                      Tier {pick.tier}
+                    </div>
+                    <div className="flex items-center gap-2">
                       <CarImage
                         carNumber={pick.driver.car_number}
-                        className="w-16 h-10 object-contain"
+                        className="w-12 h-8 object-contain flex-shrink-0"
                       />
-                      <div>
-                        <div className="text-gray-500 text-xs uppercase">
-                          Tier {pick.tier}
-                        </div>
-                        <div className="flex items-center gap-2 mt-1">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1">
                           <div
                             className="w-2 h-2 rounded-full flex-shrink-0"
                             style={{
@@ -143,27 +143,27 @@ const RaceLeaderboard = () => {
                               backgroundColor: pick.driver.secondary_color,
                             }}
                           />
-                          <div className="font-bold text-sm">
+                          <div className="font-bold text-sm truncate">
                             {pick.driver.name}
                           </div>
                         </div>
-                        <div className="text-gray-400 text-xs">
+                        <div className="text-gray-400 text-xs truncate">
                           #{pick.driver.car_number} • {pick.driver.team_name}
                         </div>
                       </div>
-                    </div>
-                    <div
-                      className={`text-xl font-black ${
-                        pick.finishing_position <= 5
-                          ? 'text-green-400'
-                          : pick.finishing_position <= 10
-                            ? 'text-yellow-400'
-                            : pick.finishing_position <= 15
-                              ? 'text-orange-400'
-                              : 'text-red-400'
-                      }`}
-                    >
-                      {pick.finishing_position ?? '–'}
+                      <div
+                        className={`text-lg font-black flex-shrink-0 ${
+                          pick.finishing_position <= 5
+                            ? 'text-green-400'
+                            : pick.finishing_position <= 10
+                              ? 'text-yellow-400'
+                              : pick.finishing_position <= 15
+                                ? 'text-orange-400'
+                                : 'text-red-400'
+                        }`}
+                      >
+                        {pick.finishing_position ?? '–'}
+                      </div>
                     </div>
                   </div>
                 ))}
