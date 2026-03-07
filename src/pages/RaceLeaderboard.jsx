@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams, Link } from 'react-router-dom'
 import { getRaceLeaderboard } from '../api/client'
-import CarImage from '../components/CarImage'
+import DriverCard from '../components/DriverCard'
 
 const PositionBadge = ({ position }) => {
   if (position === 1) return <span className="text-2xl">🥇</span>
@@ -112,60 +112,14 @@ const RaceLeaderboard = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-3">
                 {entry.picks.map((pick) => (
-                  <div
+                  <DriverCard
                     key={pick.tier}
-                    className="bg-gray-800 rounded p-2"
-                    style={{
-                      borderLeft: `4px solid ${pick.driver.primary_color}`,
-                    }}
-                  >
-                    <div className="text-gray-500 text-xs uppercase mb-1">
-                      Tier {pick.tier}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CarImage
-                        carNumber={pick.driver.car_number}
-                        className="w-12 h-8 object-contain flex-shrink-0"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1">
-                          <div
-                            className="w-2 h-2 rounded-full flex-shrink-0"
-                            style={{
-                              backgroundColor: pick.driver.primary_color,
-                            }}
-                          />
-                          <div
-                            className="w-2 h-2 rounded-full flex-shrink-0"
-                            style={{
-                              backgroundColor: pick.driver.secondary_color,
-                            }}
-                          />
-                          <div className="font-bold text-sm truncate">
-                            {pick.driver.name}
-                          </div>
-                        </div>
-                        <div className="text-gray-400 text-xs truncate">
-                          #{pick.driver.car_number} • {pick.driver.team_name}
-                        </div>
-                      </div>
-                      <div
-                        className={`text-lg font-black flex-shrink-0 ${
-                          pick.finishing_position <= 5
-                            ? 'text-green-400'
-                            : pick.finishing_position <= 10
-                              ? 'text-yellow-400'
-                              : pick.finishing_position <= 15
-                                ? 'text-orange-400'
-                                : 'text-red-400'
-                        }`}
-                      >
-                        {pick.finishing_position ?? '–'}
-                      </div>
-                    </div>
-                  </div>
+                    driver={pick.driver}
+                    tier={pick.tier}
+                    finishingPosition={pick.finishing_position}
+                  />
                 ))}
               </div>
             </div>
