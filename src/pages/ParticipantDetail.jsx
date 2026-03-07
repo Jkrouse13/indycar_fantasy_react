@@ -17,23 +17,6 @@ const ParticipantDetail = () => {
     </div>
   )
 
-  // Group picks by race
-  const picksByRace = participant?.picks?.reduce((acc, pick) => {
-    const raceId = pick.race.id
-    if (!acc[raceId]) {
-      acc[raceId] = {
-        race: pick.race,
-        picks: []
-      }
-    }
-    acc[raceId].picks.push(pick)
-    return acc
-  }, {})
-
-  const sortedRaces = Object.values(picksByRace || {}).sort(
-    (a, b) => new Date(a.race.date) - new Date(b.race.date)
-  )
-
   return (
     <div>
       <Link to="/participants" className="text-gray-400 hover:text-yellow-400 text-sm uppercase tracking-wide">
@@ -47,14 +30,14 @@ const ParticipantDetail = () => {
         <p className="text-gray-500 mb-6">{participant?.email}</p>
       )}
 
-      {sortedRaces.length === 0 ? (
+      {!participant?.races?.length ? (
         <div className="bg-gray-900 border border-gray-800 rounded-lg p-8 text-center">
           <div className="text-4xl mb-3">🤷</div>
           <div className="text-gray-400">No picks submitted yet</div>
         </div>
       ) : (
         <div className="space-y-6">
-          {sortedRaces.map(({ race, picks }) => (
+          {participant.races.map(({ race, picks, total_score }) => (
             <div key={race.id} className="bg-gray-900 border border-gray-800 rounded-lg p-4">
               <div className="flex items-center justify-between mb-3">
                 <div>
@@ -63,17 +46,25 @@ const ParticipantDetail = () => {
                     {new Date(race.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   </div>
                 </div>
-                <div className={`text-xs font-bold uppercase px-2 py-1 rounded ${
-                  race.status === 'completed' ? 'bg-green-900 text-green-400' :
-                  race.status === 'in_progress' ? 'bg-yellow-900 text-yellow-400' :
-                  'bg-gray-800 text-gray-400'
-                }`}>
-                  {race.status}
+                <div className="flex items-center gap-4">
+                  {race.status === 'final' && (
+                    <div className="text-right">
+                      <div className="text-xl font-black text-yellow-400">{total_score}</div>
+                      <div className="text-gray-500 text-xs">score</div>
+                    </div>
+                  )}
+                  <div className={`text-xs font-bold uppercase px-2 py-1 rounded ${
+                    race.status === 'final' ? 'bg-green-900 text-green-400' :
+                    race.status === 'live' ? 'bg-yellow-900 text-yellow-400' :
+                    'bg-gray-800 text-gray-400'
+                  }`}>
+                    {race.status}
+                  </div>
                 </div>
               </div>
 
               <div className="space-y-2">
-                {picks.sort((a, b) => a.tier - b.tier).map(pick => (
+                {picks.map(pick => (
                   <div
                     key={pick.id}
                     className="bg-gray-800 rounded p-2 flex items-center justify-between"
@@ -91,16 +82,13 @@ const ParticipantDetail = () => {
                         <div className="text-gray-400 text-xs">#{pick.driver.car_number}</div>
                       </div>
                     </div>
-                    {race.status === 'completed' && (
-                      <div className="text-right">
-                        <div className={`text-xl font-black ${
-                          pick.finishing_position <= 5 ? 'text-green-400' :
-                          pick.finishing_position <= 10 ? 'text-yellow-400' :
-                          pick.finishing_position <= 15 ? 'text-orange-400' : 'text-red-400'
-                        }`}>
-                          P{pick.finishing_position}
-                        </div>
-                        <div className="text-gray-500 text-xs">{pick.points} pts</div>
+                    {race.status === 'final' && pick.finishing_position && (
+                      <div className={`text-xl font-black ${
+                        pick.finishing_position <= 5 ? 'text-green-400' :
+                        pick.finishing_position <= 10 ? 'text-yellow-400' :
+                        pick.finishing_position <= 15 ? 'text-orange-400' : 'text-red-400'
+                      }`}>
+                        P{pick.finishing_position}
                       </div>
                     )}
                   </div>
