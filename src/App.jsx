@@ -3,6 +3,8 @@ import SeasonLeaderboard from './pages/SeasonLeaderboard'
 import RaceLeaderboard from './pages/RaceLeaderboard'
 import Races from './pages/Races'
 import SubmitPicks from './pages/SubmitPicks'
+import Participants from './pages/Participants'
+import ParticipantDetail from './pages/ParticipantDetail'
 
 const Navbar = () => {
   const location = useLocation()
@@ -11,6 +13,7 @@ const Navbar = () => {
     { to: '/', label: '🏆 Season Standings' },
     { to: '/races', label: '🏁 Races' },
     { to: '/picks', label: '🎯 Submit Picks' },
+    { to: '/participants', label: '👥 See Your Picks' },
   ]
 
   return (
@@ -52,6 +55,8 @@ const App = () => {
           <Route path="/races" element={<Races />} />
           <Route path="/races/:id" element={<RaceLeaderboard />} />
           <Route path="/picks" element={<SubmitPicks />} />
+          <Route path="/participants" element={<Participants />} />
+          <Route path="/participants/:id" element={<ParticipantDetail />} />
         </Routes>
       </main>
     </div>

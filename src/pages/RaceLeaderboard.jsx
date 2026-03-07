@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams, Link } from 'react-router-dom'
 import { getRaceLeaderboard } from '../api/client'
+import CarImage from '../components/CarImage'
 
 const PositionBadge = ({ position }) => {
   if (position === 1) return <span className="text-2xl">🥇</span>
@@ -85,14 +86,17 @@ const RaceLeaderboard = () => {
                     className="bg-gray-800 rounded p-2 flex items-center justify-between"
                     style={{ borderLeft: `4px solid ${pick.driver.primary_color}` }}
                   >
-                    <div>
-                      <div className="text-gray-500 text-xs uppercase">Tier {pick.tier}</div>
-                      <div className="flex items-center gap-2 mt-1">
-                        <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: pick.driver.primary_color }} />
-                        <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: pick.driver.secondary_color }} />
-                        <div className="font-bold text-sm">{pick.driver.name}</div>
+                    <div className="flex items-center gap-3">
+                      <CarImage carNumber={pick.driver.car_number} className="w-16 h-10 object-contain" />
+                      <div>
+                        <div className="text-gray-500 text-xs uppercase">Tier {pick.tier}</div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: pick.driver.primary_color }} />
+                          <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: pick.driver.secondary_color }} />
+                          <div className="font-bold text-sm">{pick.driver.name}</div>
+                        </div>
+                        <div className="text-gray-400 text-xs">#{pick.driver.car_number}</div>
                       </div>
-                      <div className="text-gray-400 text-xs">#{pick.driver.car_number}</div>
                     </div>
                     <div className={`text-xl font-black ${
                       pick.finishing_position <= 5 ? 'text-green-400' :

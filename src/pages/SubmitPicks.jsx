@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import { getRaces, getRaceTiers, submitPicks, createParticipant } from '../api/client'
+import CarImage from '../components/CarImage'
 
 const SubmitPicks = () => {
   const [email, setEmail] = useState('')
@@ -66,7 +67,17 @@ const SubmitPicks = () => {
     <div className="text-center py-20">
       <div className="text-6xl mb-4">🏁</div>
       <h2 className="text-3xl font-black text-yellow-400 uppercase mb-2">Picks Submitted!</h2>
-      <p className="text-gray-400">Good luck at {nextRace.name}!</p>
+      <p className="text-gray-400 mb-8">Good luck at {nextRace.name}!</p>
+      <button
+        onClick={() => {
+          setSubmitted(false)
+          setEmail('')
+          setPicks({})
+        }}
+        className="bg-gray-800 text-white font-bold uppercase px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+      >
+        Submit Another
+      </button>
     </div>
   )
 
@@ -139,6 +150,7 @@ const SubmitPicks = () => {
                           : 'bg-gray-900 border-gray-800 hover:border-gray-600 text-white'
                       }`}
                     >
+                      <CarImage carNumber={driver.car_number} className="w-full h-16 object-contain mb-2" />
                       <div className="flex items-center gap-2 mb-1">
                         <div
                           className="w-3 h-3 rounded-full flex-shrink-0"
