@@ -162,7 +162,7 @@ const SubmitPicks = () => {
                         />
                       </div>
                       <div className="font-bold text-sm">{driver.name}</div>
-                      <div className="text-gray-400 text-xs">#{driver.car_number}</div>
+                      <div className="text-gray-400 text-xs">#{driver.car_number} • {driver.team_name}</div>
                     </button>
                   ))}
                 </div>

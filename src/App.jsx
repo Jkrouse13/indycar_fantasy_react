@@ -15,7 +15,7 @@ const Navbar = () => {
     { to: '/', label: '🏆 Season Standings' },
     { to: '/races', label: '🏁 Races' },
     { to: '/picks', label: '🎯 Submit Picks' },
-    { to: '/participants', label: '👥 Participants' },
+    { to: '/participants', label: '👀 View Picks' },
   ]
 
   return (
