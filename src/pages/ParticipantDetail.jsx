@@ -52,7 +52,7 @@ const ParticipantDetail = () => {
         </div>
       ) : (
         <div className="space-y-4">
-          {participant.races.map(({ race, picks, total_score }) => (
+          {participant.races.map(({ race, picks, total_score, rank }) => (
             <div
               key={race.id}
               className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden"
@@ -77,11 +77,19 @@ const ParticipantDetail = () => {
                 </div>
                 <div className="flex items-center gap-4">
                   {race.status === 'final' && (
-                    <div className="text-right">
-                      <div className="text-xl font-black text-yellow-400">
-                        {total_score}
+                    <div className="flex items-center gap-4">
+                      {rank && (
+                        <div className="text-right">
+                          <div className="text-xl font-black text-white">P{rank}</div>
+                          <div className="text-gray-500 text-xs">rank</div>
+                        </div>
+                      )}
+                      <div className="text-right">
+                        <div className="text-xl font-black text-yellow-400">
+                          {total_score}
+                        </div>
+                        <div className="text-gray-500 text-xs">score</div>
                       </div>
-                      <div className="text-gray-500 text-xs">score</div>
                     </div>
                   )}
                   <div

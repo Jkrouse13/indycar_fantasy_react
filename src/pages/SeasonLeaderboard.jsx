@@ -59,13 +59,14 @@ const SeasonLeaderboard = () => {
       ) : (
         <div className="space-y-3">
           {data.leaderboard.map((entry) => (
-            <div
+            <Link
               key={entry.participant.id}
+              to={`/participants/${entry.participant.id}`}
               className={`flex items-center justify-between p-4 rounded-lg border ${
                 entry.position === 1
                   ? 'bg-yellow-400/10 border-yellow-400/50'
                   : 'bg-gray-900 border-gray-800'
-              }`}
+              } hover:border-yellow-400/40 transition-colors`}
             >
               <div className="flex items-center gap-4">
                 <PositionBadge position={entry.position} />
@@ -84,7 +85,7 @@ const SeasonLeaderboard = () => {
                   <div className="text-gray-500 text-xs uppercase tracking-wide">pts</div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
