@@ -83,6 +83,11 @@ const SeasonLeaderboard = () => {
                 <div className="text-right">
                   <div className="text-2xl font-black text-yellow-400">{entry.total_score}</div>
                   <div className="text-gray-500 text-xs uppercase tracking-wide">pts</div>
+                  {entry.missed_races > 0 && (
+                    <div className="text-gray-600 text-xs mt-1">
+                      +{entry.penalty_score} ({entry.missed_races} missed)
+                    </div>
+                  )}
                 </div>
               </div>
             </Link>
