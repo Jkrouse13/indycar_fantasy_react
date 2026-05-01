@@ -74,7 +74,7 @@ const SeasonLeaderboard = () => {
                   <div className="font-bold text-lg">{entry.participant.name}</div>
                   <div className="text-gray-500 text-sm">
                     {entry.races_entered} race{entry.races_entered !== 1 ? 's' : ''} entered
-                    {entry.best_finish && ` · Best finish: P${entry.best_finish}`}
+                    {entry.best_finish && entry.best_finish < 999 && <> · Best race: {entry.best_finish}</>}
                   </div>
                 </div>
               </div>
