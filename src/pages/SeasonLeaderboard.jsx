@@ -78,17 +78,17 @@ const SeasonLeaderboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex items-start gap-4 ml-4 shrink-0">
-                <div className="mt-1"><TrendIndicator trend={entry.trend} amount={entry.trend_amount} /></div>
-                <div className="text-right">
-                  <div className="text-2xl font-black text-yellow-400">{entry.total_score}</div>
-                  <div className="text-gray-500 text-xs uppercase tracking-wide">pts</div>
-                  {entry.missed_races > 0 && (
-                    <div className="text-gray-600 text-xs mt-1">
-                      +{entry.penalty_score} ({entry.missed_races} missed)
-                    </div>
-                  )}
+              <div className="text-right ml-4 shrink-0">
+                <div className="text-2xl font-black text-yellow-400">{entry.total_score}</div>
+                <div className="text-gray-500 text-xs uppercase tracking-wide">pts</div>
+                <div className="flex justify-end mt-1">
+                  <TrendIndicator trend={entry.trend} amount={entry.trend_amount} />
                 </div>
+                {entry.missed_races > 0 && (
+                  <div className="text-gray-600 text-xs mt-1">
+                    +{entry.penalty_score} ({entry.missed_races} missed)
+                  </div>
+                )}
               </div>
             </Link>
           ))}
