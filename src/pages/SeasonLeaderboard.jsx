@@ -62,14 +62,14 @@ const SeasonLeaderboard = () => {
             <Link
               key={entry.participant.id}
               to={`/participants/${entry.participant.id}`}
-              className={`flex items-center justify-between p-4 rounded-lg border ${
+              className={`flex items-start justify-between p-4 rounded-lg border ${
                 entry.position === 1
                   ? 'bg-yellow-400/10 border-yellow-400/50'
                   : 'bg-gray-900 border-gray-800'
               } hover:border-yellow-400/40 transition-colors`}
             >
-              <div className="flex items-center gap-4">
-                <PositionBadge position={entry.position} />
+              <div className="flex items-start gap-4">
+                <div className="mt-1"><PositionBadge position={entry.position} /></div>
                 <div>
                   <div className="font-bold text-lg">{entry.participant.name}</div>
                   <div className="text-gray-500 text-sm">
@@ -78,8 +78,8 @@ const SeasonLeaderboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-6">
-                <TrendIndicator trend={entry.trend} amount={entry.trend_amount} />
+              <div className="flex items-start gap-4 ml-4 shrink-0">
+                <div className="mt-1"><TrendIndicator trend={entry.trend} amount={entry.trend_amount} /></div>
                 <div className="text-right">
                   <div className="text-2xl font-black text-yellow-400">{entry.total_score}</div>
                   <div className="text-gray-500 text-xs uppercase tracking-wide">pts</div>
