@@ -30,12 +30,12 @@ const DriverCard = ({
     <CardWrapper
       onClick={onClick}
       style={{
-        borderLeft: !onClick ? `4px solid ${driver.primary_color}` : undefined,
+        borderLeft: `4px solid ${driver.primary_color}`,
         ...cardStyles,
       }}
       className={`bg-gray-800 rounded p-2 text-left ${
         onClick
-          ? `border transition-colors ${selected ? '' : 'border-gray-800 hover:border-gray-600'}`
+          ? `w-full border transition-colors ${selected ? '' : 'border-gray-800 hover:border-gray-600'}`
           : ''
       }`}
     >
