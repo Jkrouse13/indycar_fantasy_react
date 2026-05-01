@@ -81,7 +81,7 @@ const SeasonLeaderboard = () => {
               <div className="shrink-0 flex items-center self-center mr-3">
                 <TrendIndicator trend={entry.trend} amount={entry.trend_amount} />
               </div>
-              <div className="text-right shrink-0">
+              <div className={`text-right shrink-0 ${entry.missed_races > 0 ? 'self-start' : 'self-center'}`}>
                 <div className="text-2xl font-black text-yellow-400">{entry.total_score}</div>
                 <div className="text-gray-500 text-xs uppercase tracking-wide">pts</div>
                 {entry.missed_races > 0 && (
