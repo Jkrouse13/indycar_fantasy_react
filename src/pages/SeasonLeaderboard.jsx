@@ -68,9 +68,9 @@ const SeasonLeaderboard = () => {
                   : 'bg-gray-900 border-gray-800'
               } hover:border-yellow-400/40 transition-colors`}
             >
-              <div className="flex items-start gap-4">
-                <div className="mt-1"><PositionBadge position={entry.position} /></div>
-                <div>
+              <div className="flex items-start gap-4 min-w-0">
+                <div className="mt-1 shrink-0"><PositionBadge position={entry.position} /></div>
+                <div className="min-w-0">
                   <div className="font-bold text-lg">{entry.participant.name}</div>
                   <div className="text-gray-500 text-sm">
                     {entry.races_entered} race{entry.races_entered !== 1 ? 's' : ''} entered
