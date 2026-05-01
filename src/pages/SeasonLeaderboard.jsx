@@ -68,22 +68,22 @@ const SeasonLeaderboard = () => {
                   : 'bg-gray-900 border-gray-800'
               } hover:border-yellow-400/40 transition-colors`}
             >
-              <div className="flex items-start gap-4 min-w-0">
+              <div className="flex items-start gap-4 min-w-0 flex-1">
                 <div className="mt-1 shrink-0"><PositionBadge position={entry.position} /></div>
                 <div className="min-w-0">
                   <div className="font-bold text-lg">{entry.participant.name}</div>
-                  <div className="text-gray-500 text-sm">
-                    {entry.races_entered} race{entry.races_entered !== 1 ? 's' : ''} entered
-                    {entry.best_finish && entry.best_finish < 999 && <> · Best race: {entry.best_finish}</>}
+                  <div className="text-gray-500 text-sm leading-snug">
+                    <div>{entry.races_entered} race{entry.races_entered !== 1 ? 's' : ''} entered</div>
+                    {entry.best_finish && entry.best_finish < 999 && <div>Best race: {entry.best_finish}</div>}
                   </div>
                 </div>
               </div>
-              <div className="text-right ml-4 shrink-0">
+              <div className="shrink-0 flex items-center self-center mr-3">
+                <TrendIndicator trend={entry.trend} amount={entry.trend_amount} />
+              </div>
+              <div className="text-right shrink-0">
                 <div className="text-2xl font-black text-yellow-400">{entry.total_score}</div>
                 <div className="text-gray-500 text-xs uppercase tracking-wide">pts</div>
-                <div className="flex justify-end mt-1">
-                  <TrendIndicator trend={entry.trend} amount={entry.trend_amount} />
-                </div>
                 {entry.missed_races > 0 && (
                   <div className="text-gray-600 text-xs mt-1">
                     +{entry.penalty_score} ({entry.missed_races} missed)
