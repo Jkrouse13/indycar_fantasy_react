@@ -55,7 +55,6 @@ const QualifyingPicksPage = () => {
   const [email, setEmail] = useState('')
   const [fastTwelve, setFastTwelve] = useState([])
   const [lastRow, setLastRow] = useState([])
-  const [polePick, setPolePick] = useState('')
   const [satWreck, setSatWreck] = useState(null)
   const [sunWreck, setSunWreck] = useState(null)
   const [existingId, setExistingId] = useState(null)
@@ -101,7 +100,6 @@ const QualifyingPicksPage = () => {
       setExistingId(pred.id)
       setFastTwelve(pred.fast_twelve_driver_ids || [])
       setLastRow(pred.last_row_driver_ids || [])
-      setPolePick(pred.pole_pick_driver_id || '')
       setSatWreck(pred.saturday_wreck)
       setSunWreck(pred.sunday_wreck)
     } catch {
@@ -121,7 +119,6 @@ const QualifyingPicksPage = () => {
         qualifying_prediction: {
           participant_id: participantId,
           year: YEAR,
-          pole_pick_driver_id: polePick || null,
           saturday_wreck: satWreck,
           sunday_wreck: sunWreck,
           fast_twelve_driver_ids: fastTwelve,
@@ -144,7 +141,6 @@ const QualifyingPicksPage = () => {
     email.trim() &&
     fastTwelve.length === 12 &&
     lastRow.length === 3 &&
-    polePick &&
     satWreck !== null &&
     sunWreck !== null
 
@@ -163,8 +159,6 @@ const QualifyingPicksPage = () => {
       </div>
     )
   }
-
-  const fastTwelveDrivers = fastTwelve.map(id => drivers.find(d => d.id === id)).filter(Boolean)
 
   return (
     <div>
@@ -264,36 +258,6 @@ const QualifyingPicksPage = () => {
             )
           })}
         </div>
-      </div>
-
-      {/* Pole Pick */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xl font-black uppercase tracking-tight">Pole Winner — Sunday</h2>
-          {polePick && (
-            <span className="text-sm font-bold px-3 py-1 rounded-full bg-green-900 text-green-300">
-              1 / 1
-            </span>
-          )}
-        </div>
-        <p className="text-gray-500 text-xs mb-3">
-          Who wins pole? Must be one of your Fast 12 picks.
-        </p>
-        {fastTwelveDrivers.length === 0 ? (
-          <p className="text-gray-600 text-sm italic">Select your Fast 12 first</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-            {fastTwelveDrivers.map(driver => (
-              <DriverCard
-                key={driver.id}
-                driver={driver}
-                selected={polePick === driver.id}
-                showPosition={false}
-                onClick={() => !locked && setPolePick(polePick === driver.id ? '' : driver.id)}
-              />
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Wreck Picks */}

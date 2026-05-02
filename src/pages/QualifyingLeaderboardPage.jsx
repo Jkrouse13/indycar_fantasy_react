@@ -127,28 +127,21 @@ const QualifyingLeaderboardPage = () => {
                 </div>
 
                 {hasAnyResult ? (
-                  <div className="grid grid-cols-5 gap-2">
+                  <div className="grid grid-cols-4 gap-2">
                     <ScorePill label="Fast 12" value={score.fast_twelve} />
                     <ScorePill label="Last Row" value={score.last_row} />
-                    <ScorePill label="Sat" value={score.saturday_wreck} />
-                    <ScorePill label="Pole" value={score.pole} />
-                    <ScorePill label="Sun" value={score.sunday_wreck} />
+                    <ScorePill label="Sat Wreck" value={score.saturday_wreck} />
+                    <ScorePill label="Sun Wreck" value={score.sunday_wreck} />
                   </div>
                 ) : (
                   /* Picks preview (no results yet) */
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    <div className="bg-gray-800 rounded px-3 py-2">
-                      <p className="text-gray-500 uppercase tracking-wide mb-1">Pole Pick</p>
-                      <p className="font-bold text-white">{driverName(pred.pole_pick_driver_id)}</p>
-                    </div>
-                    <div className="bg-gray-800 rounded px-3 py-2">
-                      <p className="text-gray-500 uppercase tracking-wide mb-1">Wrecks</p>
-                      <p className="font-bold">
-                        <span className={pred.saturday_wreck ? 'text-red-400' : 'text-green-400'}>Sat {pred.saturday_wreck ? 'Y' : 'N'}</span>
-                        {' · '}
-                        <span className={pred.sunday_wreck ? 'text-red-400' : 'text-green-400'}>Sun {pred.sunday_wreck ? 'Y' : 'N'}</span>
-                      </p>
-                    </div>
+                  <div className="bg-gray-800 rounded px-3 py-2 text-xs">
+                    <p className="text-gray-500 uppercase tracking-wide mb-1">Wrecks</p>
+                    <p className="font-bold">
+                      <span className={pred.saturday_wreck ? 'text-red-400' : 'text-green-400'}>Sat {pred.saturday_wreck ? 'Y' : 'N'}</span>
+                      {' · '}
+                      <span className={pred.sunday_wreck ? 'text-red-400' : 'text-green-400'}>Sun {pred.sunday_wreck ? 'Y' : 'N'}</span>
+                    </p>
                   </div>
                 )}
               </div>
