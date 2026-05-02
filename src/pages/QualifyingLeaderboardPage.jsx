@@ -65,6 +65,8 @@ const QualifyingLeaderboardPage = () => {
   const resFtSet = new Set(resFtIds)
   const resLrSet = new Set(resLrIds)
   const resFtByPos = Object.fromEntries(resFtIds.map((id, i) => [i + 1, id]))
+  // Fall back to pole_driver_id as P1 when result positions aren't stored
+  if (!resFtByPos[1] && result?.pole_driver_id) resFtByPos[1] = result.pole_driver_id
   const resLrByPos = Object.fromEntries(resLrIds.map((id, i) => [i + 1, id]))
 
   const ftPickColor = (driverId, pos) => {
