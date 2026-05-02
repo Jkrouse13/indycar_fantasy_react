@@ -135,13 +135,19 @@ const QualifyingLeaderboardPage = () => {
                   </div>
                 ) : (
                   /* Picks preview (no results yet) */
-                  <div className="bg-gray-800 rounded px-3 py-2 text-xs">
-                    <p className="text-gray-500 uppercase tracking-wide mb-1">Wrecks</p>
-                    <p className="font-bold">
-                      <span className={pred.saturday_wreck ? 'text-red-400' : 'text-green-400'}>Sat {pred.saturday_wreck ? 'Y' : 'N'}</span>
-                      {' · '}
-                      <span className={pred.sunday_wreck ? 'text-red-400' : 'text-green-400'}>Sun {pred.sunday_wreck ? 'Y' : 'N'}</span>
-                    </p>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="bg-gray-800 rounded px-3 py-2">
+                      <p className="text-gray-500 uppercase tracking-wide mb-1">Pole Pick (P1)</p>
+                      <p className="font-bold text-white">{driverName(pred.fast_twelve_driver_ids?.[0])}</p>
+                    </div>
+                    <div className="bg-gray-800 rounded px-3 py-2">
+                      <p className="text-gray-500 uppercase tracking-wide mb-1">Wrecks</p>
+                      <p className="font-bold">
+                        <span className={pred.saturday_wreck ? 'text-red-400' : 'text-green-400'}>Sat {pred.saturday_wreck ? 'Y' : 'N'}</span>
+                        {' · '}
+                        <span className={pred.sunday_wreck ? 'text-red-400' : 'text-green-400'}>Sun {pred.sunday_wreck ? 'Y' : 'N'}</span>
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>
