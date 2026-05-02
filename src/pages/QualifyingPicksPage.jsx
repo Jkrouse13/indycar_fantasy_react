@@ -53,8 +53,8 @@ const CountdownBanner = () => {
 
 const QualifyingPicksPage = () => {
   const [email, setEmail] = useState('')
-  const [fastTwelve, setFastTwelve] = useState(new Set())
-  const [lastRow, setLastRow] = useState(new Set())
+  const [fastTwelve, setFastTwelve] = useState([])
+  const [lastRow, setLastRow] = useState([])
   const [polePick, setPolePick] = useState('')
   const [satWreck, setSatWreck] = useState(null)
   const [sunWreck, setSunWreck] = useState(null)
@@ -73,24 +73,21 @@ const QualifyingPicksPage = () => {
   const toggleFastTwelve = (id) => {
     if (locked) return
     setFastTwelve(prev => {
-      const next = new Set(prev)
-      if (next.has(id)) {
-        next.delete(id)
+      if (prev.includes(id)) {
         if (polePick === id) setPolePick('')
-      } else if (next.size < 12 && !lastRow.has(id)) {
-        next.add(id)
+        return prev.filter(d => d !== id)
       }
-      return next
+      if (prev.length < 12 && !lastRow.includes(id)) return [...prev, id]
+      return prev
     })
   }
 
   const toggleLastRow = (id) => {
     if (locked) return
     setLastRow(prev => {
-      const next = new Set(prev)
-      if (next.has(id)) { next.delete(id) }
-      else if (next.size < 3 && !fastTwelve.has(id)) { next.add(id) }
-      return next
+      if (prev.includes(id)) return prev.filter(d => d !== id)
+      if (prev.length < 3 && !fastTwelve.includes(id)) return [...prev, id]
+      return prev
     })
   }
 
@@ -102,8 +99,8 @@ const QualifyingPicksPage = () => {
       if (!match) return
       const pred = await getQualifyingPrediction(match.id, YEAR).then(r => r.data)
       setExistingId(pred.id)
-      setFastTwelve(new Set(pred.fast_twelve_driver_ids))
-      setLastRow(new Set(pred.last_row_driver_ids))
+      setFastTwelve(pred.fast_twelve_driver_ids || [])
+      setLastRow(pred.last_row_driver_ids || [])
       setPolePick(pred.pole_pick_driver_id || '')
       setSatWreck(pred.saturday_wreck)
       setSunWreck(pred.sunday_wreck)
@@ -127,8 +124,8 @@ const QualifyingPicksPage = () => {
           pole_pick_driver_id: polePick || null,
           saturday_wreck: satWreck,
           sunday_wreck: sunWreck,
-          fast_twelve_driver_ids: Array.from(fastTwelve),
-          last_row_driver_ids: Array.from(lastRow),
+          fast_twelve_driver_ids: fastTwelve,
+          last_row_driver_ids: lastRow,
         },
       }
 
@@ -145,8 +142,8 @@ const QualifyingPicksPage = () => {
   const canSubmit =
     !locked &&
     email.trim() &&
-    fastTwelve.size === 12 &&
-    lastRow.size === 3 &&
+    fastTwelve.length === 12 &&
+    lastRow.length === 3 &&
     polePick &&
     satWreck !== null &&
     sunWreck !== null
@@ -167,7 +164,7 @@ const QualifyingPicksPage = () => {
     )
   }
 
-  const fastTwelveDrivers = drivers.filter(d => fastTwelve.has(d.id))
+  const fastTwelveDrivers = fastTwelve.map(id => drivers.find(d => d.id === id)).filter(Boolean)
 
   return (
     <div>
@@ -179,6 +176,16 @@ const QualifyingPicksPage = () => {
       </p>
 
       <CountdownBanner />
+
+      {/* Sticky pick counter */}
+      <div className="sticky top-0 z-20 -mx-4 px-4 py-2 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800 flex gap-6">
+        <span className={`text-sm font-bold ${fastTwelve.length === 12 ? 'text-green-400' : 'text-yellow-400'}`}>
+          Fast 12: {fastTwelve.length}/12
+        </span>
+        <span className={`text-sm font-bold ${lastRow.length === 3 ? 'text-green-400' : 'text-yellow-400'}`}>
+          Last Row: {lastRow.length}/3
+        </span>
+      </div>
 
       {/* Email */}
       <div className="mb-8">
@@ -199,23 +206,24 @@ const QualifyingPicksPage = () => {
       </div>
 
       {/* Fast 12 */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xl font-black uppercase tracking-tight">Fast 12 — Saturday</h2>
-          <span className={`text-sm font-bold px-3 py-1 rounded-full ${fastTwelve.size === 12 ? 'bg-green-900 text-green-300' : 'bg-gray-800 text-gray-300'}`}>
-            {fastTwelve.size} / 12
-          </span>
-        </div>
+      <div className="mb-8 mt-6">
+        <h2 className="text-xl font-black uppercase tracking-tight mb-1">Fast 12 — Saturday</h2>
         <p className="text-gray-500 text-xs mb-3">
-          Pick the 12 drivers who will advance to the Fast 12 shootout on Saturday
+          Pick the 12 drivers in the order you think they'll qualify. Pick order = starting position.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           {drivers.map(driver => {
-            const inLastRow = lastRow.has(driver.id)
-            const selected = fastTwelve.has(driver.id)
-            const dimmed = !selected && (fastTwelve.size >= 12 || inLastRow || locked)
+            const inLastRow = lastRow.includes(driver.id)
+            const selected = fastTwelve.includes(driver.id)
+            const position = selected ? fastTwelve.indexOf(driver.id) + 1 : null
+            const dimmed = !selected && (fastTwelve.length >= 12 || inLastRow || locked)
             return (
-              <div key={driver.id} className={dimmed ? 'opacity-40' : ''}>
+              <div key={driver.id} className={`relative ${dimmed ? 'opacity-40' : ''}`}>
+                {selected && (
+                  <div className="absolute top-1 right-1 z-10 bg-yellow-400 text-black text-xs font-black rounded px-1.5 py-0.5 leading-none">
+                    P{position}
+                  </div>
+                )}
                 <DriverCard
                   driver={driver}
                   selected={selected}
@@ -230,21 +238,22 @@ const QualifyingPicksPage = () => {
 
       {/* Last Row */}
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xl font-black uppercase tracking-tight">Last Row — Saturday</h2>
-          <span className={`text-sm font-bold px-3 py-1 rounded-full ${lastRow.size === 3 ? 'bg-green-900 text-green-300' : 'bg-gray-800 text-gray-300'}`}>
-            {lastRow.size} / 3
-          </span>
-        </div>
+        <h2 className="text-xl font-black uppercase tracking-tight mb-1">Last Row — Saturday</h2>
         <p className="text-gray-500 text-xs mb-3">
-          Pick the 3 drivers who will start from the last row (P28–30) on Saturday
+          Pick the 3 drivers who will start P31–P33. Pick order = starting position.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          {drivers.filter(d => !fastTwelve.has(d.id)).map(driver => {
-            const selected = lastRow.has(driver.id)
-            const dimmed = !selected && (lastRow.size >= 3 || locked)
+          {drivers.filter(d => !fastTwelve.includes(d.id)).map(driver => {
+            const selected = lastRow.includes(driver.id)
+            const position = selected ? 31 + lastRow.indexOf(driver.id) : null
+            const dimmed = !selected && (lastRow.length >= 3 || locked)
             return (
-              <div key={driver.id} className={dimmed ? 'opacity-40' : ''}>
+              <div key={driver.id} className={`relative ${dimmed ? 'opacity-40' : ''}`}>
+                {selected && (
+                  <div className="absolute top-1 right-1 z-10 bg-red-500 text-white text-xs font-black rounded px-1.5 py-0.5 leading-none">
+                    P{position}
+                  </div>
+                )}
                 <DriverCard
                   driver={driver}
                   selected={selected}
