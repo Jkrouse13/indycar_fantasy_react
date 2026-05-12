@@ -12,6 +12,7 @@ const SubmitPicks = () => {
   const [email, setEmail] = useState('')
   const [picks, setPicks] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [wasUpdate, setWasUpdate] = useState(false)
 
   const { data: races, isLoading: racesLoading } = useQuery({
     queryKey: ['races'],
@@ -51,9 +52,12 @@ const SubmitPicks = () => {
         },
       )
 
-      await Promise.all(pickPromises)
+      return Promise.all(pickPromises)
     },
-    onSuccess: () => setSubmitted(true),
+    onSuccess: (responses) => {
+      setWasUpdate(responses.some((r) => r.status === 200))
+      setSubmitted(true)
+    },
   })
 
   const allTiersPicked =
@@ -85,12 +89,13 @@ const SubmitPicks = () => {
       <div className="text-center py-20">
         <div className="text-6xl mb-4">🏁</div>
         <h2 className="text-3xl font-black text-yellow-400 uppercase mb-2">
-          Picks Submitted!
+          {wasUpdate ? 'Picks Updated!' : 'Picks Submitted!'}
         </h2>
         <p className="text-gray-400 mb-8">Good luck at {nextRace.name}!</p>
         <button
           onClick={() => {
             setSubmitted(false)
+            setWasUpdate(false)
             setEmail('')
             setPicks({})
           }}
