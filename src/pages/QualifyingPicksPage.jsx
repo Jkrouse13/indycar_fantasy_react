@@ -73,7 +73,6 @@ const QualifyingPicksPage = () => {
     if (locked) return
     setFastTwelve(prev => {
       if (prev.includes(id)) {
-        if (polePick === id) setPolePick('')
         return prev.filter(d => d !== id)
       }
       if (prev.length < 12 && !lastRow.includes(id)) return [...prev, id]
