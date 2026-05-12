@@ -8,17 +8,17 @@ const PositionBadge = ({ position }) => {
   if (position === 1) return <span className="text-2xl">🥇</span>
   if (position === 2) return <span className="text-2xl">🥈</span>
   if (position === 3) return <span className="text-2xl">🥉</span>
-  return <span className="text-gray-400 font-bold text-lg w-8 text-center">{position}</span>
+  return <span className="text-blue-300 font-bold text-lg w-8 text-center">{position}</span>
 }
 
 const ScorePill = ({ label, value }) => {
   const pending = value === null || value === undefined
   return (
-    <div className="bg-gray-800 rounded px-3 py-2 text-center">
-      <div className={`font-black text-base ${pending ? 'text-gray-600' : value > 0 ? 'text-green-400' : 'text-gray-400'}`}>
+    <div className="bg-[#071428] rounded px-3 py-2 text-center">
+      <div className={`font-black text-base ${pending ? 'text-blue-300/30' : value > 0 ? 'text-green-400' : 'text-gray-400'}`}>
         {pending ? '–' : value}
       </div>
-      <div className="text-gray-500 text-xs uppercase tracking-wide">{label}</div>
+      <div className="text-blue-300/50 text-xs uppercase tracking-wide">{label}</div>
     </div>
   )
 }
@@ -59,25 +59,23 @@ const QualifyingLeaderboardPage = () => {
     return d ? `#${d.car_number} ${d.name}` : '—'
   }
 
-  // Precompute result sets/maps for color coding
   const resFtIds = result?.fast_twelve_driver_ids || []
   const resLrIds = result?.last_row_driver_ids || []
   const resFtSet = new Set(resFtIds)
   const resLrSet = new Set(resLrIds)
   const resFtByPos = Object.fromEntries(resFtIds.map((id, i) => [i + 1, id]))
-  // Fall back to pole_driver_id as P1 when result positions aren't stored
   if (!resFtByPos[1] && result?.pole_driver_id) resFtByPos[1] = result.pole_driver_id
   const resLrByPos = Object.fromEntries(resLrIds.map((id, i) => [i + 1, id]))
 
   const ftPickColor = (driverId, pos) => {
-    if (!hasAnyResult) return 'text-gray-400'
+    if (!hasAnyResult) return 'text-blue-200'
     if (resFtByPos[pos] === driverId) return 'text-yellow-400'
     if (resFtSet.has(driverId)) return 'text-green-400'
     return 'text-red-400'
   }
 
   const lrPickColor = (driverId, pos) => {
-    if (!hasAnyResult) return 'text-gray-400'
+    if (!hasAnyResult) return 'text-blue-200'
     if (resLrByPos[pos] === driverId) return 'text-yellow-400'
     if (resLrSet.has(driverId)) return 'text-green-400'
     return 'text-red-400'
@@ -91,38 +89,39 @@ const QualifyingLeaderboardPage = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-black uppercase tracking-tight text-yellow-400 mb-2">
+      <div className="text-yellow-400 text-center text-lg tracking-widest mb-1">★ ★ ★</div>
+      <h1 className="text-3xl font-black uppercase tracking-tight text-white text-center mb-1">
         Qualifying Standings
       </h1>
-      <p className="text-gray-400 text-sm mb-6">{YEAR} Indy 500 Qualifying Predictions</p>
+      <p className="text-red-400 text-sm text-center mb-6 font-bold uppercase tracking-widest">{YEAR} Indy 500</p>
 
       {/* Official results summary */}
       {result && (
-        <div className="bg-gray-900 border border-gray-800 rounded-lg p-4 mb-6">
-          <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-3">
+        <div className="bg-[#0e2040] border border-red-800 rounded-lg p-4 mb-6">
+          <p className="text-xs font-bold uppercase tracking-wide text-red-300 mb-3">
             {finalized ? '✅ Official Results' : '⏳ Results Pending'}
           </p>
           {finalized ? (
             <div className="grid grid-cols-3 gap-3 text-sm">
               <div>
-                <p className="text-gray-500 text-xs uppercase mb-1">Pole</p>
+                <p className="text-blue-300/50 text-xs uppercase mb-1">Pole</p>
                 <p className="font-bold text-yellow-400 text-xs">{driverName(result.pole_driver_id)}</p>
               </div>
               <div>
-                <p className="text-gray-500 text-xs uppercase mb-1">Sat Wreck</p>
+                <p className="text-blue-300/50 text-xs uppercase mb-1">Sat Wreck</p>
                 <p className={`font-bold ${result.saturday_wreck ? 'text-red-400' : 'text-green-400'}`}>
                   {result.saturday_wreck ? 'Yes' : 'No'}
                 </p>
               </div>
               <div>
-                <p className="text-gray-500 text-xs uppercase mb-1">Sun Wreck</p>
+                <p className="text-blue-300/50 text-xs uppercase mb-1">Sun Wreck</p>
                 <p className={`font-bold ${result.sunday_wreck ? 'text-red-400' : 'text-green-400'}`}>
                   {result.sunday_wreck ? 'Yes' : 'No'}
                 </p>
               </div>
             </div>
           ) : (
-            <p className="text-gray-500 text-sm">Scores will appear once qualifying is complete.</p>
+            <p className="text-blue-300/50 text-sm">Scores will appear once qualifying is complete.</p>
           )}
         </div>
       )}
@@ -137,7 +136,7 @@ const QualifyingLeaderboardPage = () => {
       )}
 
       {sorted.length === 0 ? (
-        <p className="text-gray-500 text-center py-12">No predictions submitted yet.</p>
+        <p className="text-blue-300/50 text-center py-12">No predictions submitted yet.</p>
       ) : (
         <div className="space-y-3">
           {sorted.map((pred, i) => {
@@ -148,9 +147,8 @@ const QualifyingLeaderboardPage = () => {
             return (
               <div
                 key={pred.id}
-                className={`rounded-lg border ${isLeader ? 'bg-yellow-400/10 border-yellow-400/50' : 'bg-gray-900 border-gray-800'}`}
+                className={`rounded-lg border ${isLeader ? 'bg-red-900/20 border-red-700/50' : 'bg-[#0e2040] border-red-900'}`}
               >
-                {/* Header row — tap to expand */}
                 <button
                   className="w-full p-4 text-left"
                   onClick={() => setExpanded(prev => ({ ...prev, [pred.id]: !prev[pred.id] }))}
@@ -164,14 +162,13 @@ const QualifyingLeaderboardPage = () => {
                       {hasAnyResult && (
                         <div className="text-right">
                           <div className="text-2xl font-black text-yellow-400">{score.total ?? 0}</div>
-                          <div className="text-gray-500 text-xs uppercase tracking-wide">pts</div>
+                          <div className="text-blue-300/50 text-xs uppercase tracking-wide">pts</div>
                         </div>
                       )}
-                      <span className="text-gray-500 text-lg">{isExpanded ? '▲' : '▼'}</span>
+                      <span className="text-red-400/60 text-lg">{isExpanded ? '▲' : '▼'}</span>
                     </div>
                   </div>
 
-                  {/* Score pills (collapsed summary) */}
                   {!isExpanded && (
                     <div className="mt-3">
                       {hasAnyResult ? (
@@ -183,12 +180,12 @@ const QualifyingLeaderboardPage = () => {
                         </div>
                       ) : (
                         <div className="grid grid-cols-2 gap-2 text-xs">
-                          <div className="bg-gray-800 rounded px-3 py-2">
-                            <p className="text-gray-500 uppercase tracking-wide mb-1">Pole Pick (P1)</p>
+                          <div className="bg-[#071428] rounded px-3 py-2">
+                            <p className="text-blue-300/50 uppercase tracking-wide mb-1">Pole Pick (P1)</p>
                             <p className="font-bold text-white">{driverName(pred.fast_twelve_driver_ids?.[0])}</p>
                           </div>
-                          <div className="bg-gray-800 rounded px-3 py-2">
-                            <p className="text-gray-500 uppercase tracking-wide mb-1">Wrecks</p>
+                          <div className="bg-[#071428] rounded px-3 py-2">
+                            <p className="text-blue-300/50 uppercase tracking-wide mb-1">Wrecks</p>
                             <p className="font-bold">
                               <span className={pred.saturday_wreck ? 'text-red-400' : 'text-green-400'}>Sat {pred.saturday_wreck ? 'Y' : 'N'}</span>
                               {' · '}
@@ -201,18 +198,16 @@ const QualifyingLeaderboardPage = () => {
                   )}
                 </button>
 
-                {/* Expanded picks detail */}
                 {isExpanded && (
-                  <div className="px-4 pb-4 border-t border-gray-800 pt-4 space-y-4">
-                    {/* Fast 12 */}
+                  <div className="px-4 pb-4 border-t border-red-900/40 pt-4 space-y-4">
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wide text-gray-500 mb-2">Fast 12</p>
+                      <p className="text-xs font-bold uppercase tracking-wide text-red-300/70 mb-2">Fast 12</p>
                       <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                         {(pred.fast_twelve_driver_ids || []).map((id, i) => {
                           const pos = i + 1
                           return (
                             <div key={id} className="flex items-center gap-2 text-xs">
-                              <span className="text-gray-600 w-5 shrink-0 text-right">P{pos}</span>
+                              <span className="text-blue-300/40 w-5 shrink-0 text-right">P{pos}</span>
                               <span className={`font-bold ${ftPickColor(id, pos)}`}>{driverName(id)}</span>
                             </div>
                           )
@@ -220,15 +215,14 @@ const QualifyingLeaderboardPage = () => {
                       </div>
                     </div>
 
-                    {/* Last Row */}
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wide text-gray-500 mb-2">Last Row</p>
+                      <p className="text-xs font-bold uppercase tracking-wide text-red-300/70 mb-2">Last Row</p>
                       <div className="space-y-1">
                         {(pred.last_row_driver_ids || []).map((id, i) => {
                           const pos = i + 1
                           return (
                             <div key={id} className="flex items-center gap-2 text-xs">
-                              <span className="text-gray-600 w-7 shrink-0 text-right">P{31 + i}</span>
+                              <span className="text-blue-300/40 w-7 shrink-0 text-right">P{31 + i}</span>
                               <span className={`font-bold ${lrPickColor(id, pos)}`}>{driverName(id)}</span>
                             </div>
                           )
@@ -236,23 +230,22 @@ const QualifyingLeaderboardPage = () => {
                       </div>
                     </div>
 
-                    {/* Wrecks */}
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wide text-gray-500 mb-2">Wrecks</p>
+                      <p className="text-xs font-bold uppercase tracking-wide text-red-300/70 mb-2">Wrecks</p>
                       <div className="flex gap-6 text-xs">
                         <div>
-                          <span className="text-gray-600">Sat: </span>
+                          <span className="text-blue-300/40">Sat: </span>
                           <span className={`font-bold ${
-                            !hasAnyResult ? 'text-gray-400' :
+                            !hasAnyResult ? 'text-blue-200' :
                             pred.saturday_wreck === result.saturday_wreck ? 'text-green-400' : 'text-red-400'
                           }`}>
                             {pred.saturday_wreck ? 'Yes' : 'No'}
                           </span>
                         </div>
                         <div>
-                          <span className="text-gray-600">Sun: </span>
+                          <span className="text-blue-300/40">Sun: </span>
                           <span className={`font-bold ${
-                            !hasAnyResult ? 'text-gray-400' :
+                            !hasAnyResult ? 'text-blue-200' :
                             pred.sunday_wreck === result.sunday_wreck ? 'text-green-400' : 'text-red-400'
                           }`}>
                             {pred.sunday_wreck ? 'Yes' : 'No'}

@@ -34,14 +34,14 @@ const CountdownBanner = () => {
   const locked = Date.now() >= LOCKOUT
   return (
     <div className="mb-6">
-      <div className={`text-center py-2 px-4 rounded-lg text-sm font-bold uppercase tracking-wide ${locked ? 'bg-red-900 text-red-300' : 'bg-gray-800 text-yellow-400'}`}>
+      <div className={`text-center py-2 px-4 rounded-lg text-sm font-bold uppercase tracking-wide ${locked ? 'bg-red-900 text-red-300' : 'bg-red-900/40 text-yellow-400'}`}>
         {locked ? 'Picks Locked — Qualifying has started' : `Locks in ${timeLeft} (11:00 AM ET Sat May 16)`}
       </div>
       {locked && (
         <div className="text-center mt-3">
           <Link
             to="/qualifying/leaderboard"
-            className="inline-block px-6 py-2 bg-yellow-400 text-black font-black uppercase rounded-lg hover:bg-yellow-300 text-sm tracking-wide"
+            className="inline-block px-6 py-2 bg-red-700 text-white font-black uppercase rounded-lg hover:bg-red-600 text-sm tracking-wide"
           >
             🏆 View Qualifying Standings
           </Link>
@@ -148,10 +148,10 @@ const QualifyingPicksPage = () => {
       <div className="text-center py-16">
         <div className="text-5xl mb-4">🏁</div>
         <h2 className="text-3xl font-black uppercase text-yellow-400 mb-2">Picks Saved!</h2>
-        <p className="text-gray-400">Your Indy 500 qualifying predictions are locked in.</p>
+        <p className="text-blue-300/60">Your Indy 500 qualifying predictions are locked in.</p>
         <button
           onClick={() => setSubmitted(false)}
-          className="mt-6 px-6 py-2 bg-gray-800 rounded text-sm font-bold uppercase hover:bg-gray-700"
+          className="mt-6 px-6 py-2 bg-[#0e2040] border border-red-800 rounded text-sm font-bold uppercase hover:border-red-600 text-white"
         >
           Edit Picks
         </button>
@@ -161,17 +161,18 @@ const QualifyingPicksPage = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-black uppercase tracking-tight text-yellow-400 mb-2">
-        Indy 500 Qualifying Predictions
+      <div className="text-yellow-400 text-center text-lg tracking-widest mb-1">★ ★ ★</div>
+      <h1 className="text-3xl font-black uppercase tracking-tight text-white text-center mb-1">
+        Indy 500 Qualifying
       </h1>
-      <p className="text-gray-400 text-sm mb-6">
-        {YEAR} · Saturday Fast 12 &amp; Last Row · Sunday Pole
+      <p className="text-red-400 text-sm text-center mb-6 font-bold uppercase tracking-widest">
+        {YEAR} · Fast 12 &amp; Last Row Predictions
       </p>
 
       <CountdownBanner />
 
       {/* Sticky pick counter */}
-      <div className="sticky top-0 z-20 -mx-4 px-4 py-2 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800 flex gap-6">
+      <div className="sticky top-0 z-20 -mx-4 px-4 py-2 bg-[#071428]/95 backdrop-blur-sm border-b border-red-900 flex gap-6">
         <span className={`text-sm font-bold ${fastTwelve.length === 12 ? 'text-green-400' : 'text-yellow-400'}`}>
           Fast 12: {fastTwelve.length}/12
         </span>
@@ -181,8 +182,8 @@ const QualifyingPicksPage = () => {
       </div>
 
       {/* Email */}
-      <div className="mb-8">
-        <label className="block text-xs font-bold uppercase tracking-wide text-gray-400 mb-2">
+      <div className="mb-8 mt-6">
+        <label className="block text-xs font-bold uppercase tracking-wide text-red-300/70 mb-2">
           Your Email
         </label>
         <input
@@ -191,7 +192,7 @@ const QualifyingPicksPage = () => {
           onChange={e => setEmail(e.target.value)}
           onBlur={lookupPicks}
           placeholder="you@example.com"
-          className="bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-400 w-full md:w-96"
+          className="bg-[#0e2040] border border-red-900 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500 w-full md:w-96"
         />
         {existingId && (
           <p className="text-green-400 text-xs mt-1">Existing picks loaded — saving will update them.</p>
@@ -200,8 +201,10 @@ const QualifyingPicksPage = () => {
 
       {/* Fast 12 */}
       <div className="mb-8 mt-6">
-        <h2 className="text-xl font-black uppercase tracking-tight mb-1">Fast 12 — Saturday</h2>
-        <p className="text-gray-500 text-xs mb-3">
+        <h2 className="text-xl font-black uppercase tracking-tight mb-1 text-white">
+          ★ Fast 12 — Saturday
+        </h2>
+        <p className="text-blue-300/50 text-xs mb-3">
           Pick the 12 drivers in the order you think they'll qualify. Pick order = starting position.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -231,8 +234,10 @@ const QualifyingPicksPage = () => {
 
       {/* Last Row */}
       <div className="mb-8">
-        <h2 className="text-xl font-black uppercase tracking-tight mb-1">Last Row — Saturday</h2>
-        <p className="text-gray-500 text-xs mb-3">
+        <h2 className="text-xl font-black uppercase tracking-tight mb-1 text-white">
+          ★ Last Row — Saturday
+        </h2>
+        <p className="text-blue-300/50 text-xs mb-3">
           Pick the 3 drivers who will start P31–P33. Pick order = starting position.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -261,14 +266,16 @@ const QualifyingPicksPage = () => {
 
       {/* Wreck Picks */}
       <div className="mb-10">
-        <h2 className="text-xl font-black uppercase tracking-tight mb-4">Wreck Predictions</h2>
+        <h2 className="text-xl font-black uppercase tracking-tight mb-4 text-white">
+          ★ Wreck Predictions
+        </h2>
         <div className="flex flex-col gap-4 md:flex-row md:gap-8">
           {[
             { label: 'Wreck on Saturday?', value: satWreck, set: setSatWreck },
             { label: 'Wreck on Sunday?', value: sunWreck, set: setSunWreck },
           ].map(({ label, value, set }) => (
             <div key={label}>
-              <p className="text-sm font-bold uppercase tracking-wide text-gray-300 mb-2">{label}</p>
+              <p className="text-sm font-bold uppercase tracking-wide text-blue-200 mb-2">{label}</p>
               <div className="flex gap-2">
                 {[true, false].map(opt => (
                   <button
@@ -278,7 +285,7 @@ const QualifyingPicksPage = () => {
                     className={`px-6 py-2 rounded-lg font-bold uppercase text-sm transition-colors disabled:opacity-50 ${
                       value === opt
                         ? opt ? 'bg-red-700 text-white' : 'bg-green-800 text-white'
-                        : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                        : 'bg-[#0e2040] border border-red-900 text-blue-200 hover:border-red-700'
                     }`}
                   >
                     {opt ? 'Yes' : 'No'}

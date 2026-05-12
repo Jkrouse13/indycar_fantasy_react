@@ -84,8 +84,11 @@ const Navbar = () => {
 }
 
 const App = () => {
+  const location = useLocation()
+  const is500Route = location.pathname.startsWith('/qualifying') || location.pathname.startsWith('/pool')
+
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className={`min-h-screen text-white ${is500Route ? 'bg-[#071428]' : 'bg-gray-950'}`}>
       <Navbar />
       <main className="max-w-5xl mx-auto px-4 py-8">
         <Routes>
