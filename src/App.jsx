@@ -8,6 +8,7 @@ import Participants from './pages/Participants'
 import ParticipantDetail from './pages/ParticipantDetail'
 import QualifyingPicksPage from './pages/QualifyingPicksPage'
 import QualifyingLeaderboardPage from './pages/QualifyingLeaderboardPage'
+import DriverPoolPage from './pages/DriverPoolPage'
 
 const Navbar = () => {
   const location = useLocation()
@@ -20,6 +21,7 @@ const Navbar = () => {
     { to: '/participants', label: '👀 View Picks' },
     { to: '/qualifying', label: '⚡ Qual Picks' },
     { to: '/qualifying/leaderboard', label: '⚡ Qual Standings' },
+    { to: '/pool', label: '🎰 Driver Pool' },
   ]
 
   return (
@@ -95,6 +97,7 @@ const App = () => {
           <Route path="/participants/:id" element={<ParticipantDetail />} />
           <Route path="/qualifying" element={<QualifyingPicksPage />} />
           <Route path="/qualifying/leaderboard" element={<QualifyingLeaderboardPage />} />
+          <Route path="/pool" element={<DriverPoolPage />} />
         </Routes>
       </main>
     </div>

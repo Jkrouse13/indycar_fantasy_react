@@ -28,4 +28,7 @@ export const updateQualifyingPrediction = (id, data) =>
 export const getQualifyingResult = (year = 2026) =>
   client.get(`/qualifying_results/${year}`)
 
+export const getPoolEntries = (year = 2026) =>
+  client.get(`/pool_entries?year=${year}`)
+
 export default client
