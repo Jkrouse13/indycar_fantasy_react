@@ -77,10 +77,10 @@ const SubmitPicks = () => {
     return (
       <div className="text-center py-20">
         <div className="text-6xl mb-4">🏁</div>
-        <h2 className="text-2xl font-black text-gray-400 uppercase">
+        <h2 className="text-2xl font-black text-blue-300/60 uppercase">
           No Upcoming Races
         </h2>
-        <p className="text-gray-500 mt-2">Check back soon!</p>
+        <p className="text-blue-300/40 mt-2">Check back soon!</p>
       </div>
     )
 
@@ -91,7 +91,7 @@ const SubmitPicks = () => {
         <h2 className="text-3xl font-black text-yellow-400 uppercase mb-2">
           {wasUpdate ? 'Picks Updated!' : 'Picks Submitted!'}
         </h2>
-        <p className="text-gray-400 mb-8">Good luck at {nextRace.name}!</p>
+        <p className="text-blue-300/60 mb-8">Good luck at {nextRace.name}!</p>
         <button
           onClick={() => {
             setSubmitted(false)
@@ -99,7 +99,7 @@ const SubmitPicks = () => {
             setEmail('')
             setPicks({})
           }}
-          className="bg-gray-800 text-white font-bold uppercase px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+          className="bg-[#0e2040] border border-red-800 text-white font-bold uppercase px-6 py-3 rounded-lg hover:border-red-600 transition-colors"
         >
           Submit Another
         </button>
@@ -108,15 +108,15 @@ const SubmitPicks = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-black uppercase tracking-tight text-yellow-400 mb-2">
+      <h1 className="text-3xl font-black uppercase tracking-tight text-white mb-2">
         🎯 Submit Your Picks
       </h1>
 
       {/* Race Info */}
-      <div className="bg-gray-900 border border-gray-800 rounded-lg p-4 mb-8">
+      <div className="bg-[#0e2040] border border-red-900 rounded-lg p-4 mb-8">
         <div className="font-black text-xl">{nextRace.name}</div>
-        <div className="text-gray-400 text-sm mt-1">🏟️ {nextRace.track}</div>
-        <div className="text-gray-500 text-sm">
+        <div className="text-blue-300/60 text-sm mt-1">🏟️ {nextRace.track}</div>
+        <div className="text-blue-300/40 text-sm">
           📅{' '}
           {new Date(nextRace.date).toLocaleDateString('en-US', {
             weekday: 'long',
@@ -128,7 +128,7 @@ const SubmitPicks = () => {
 
       {/* Email */}
       <div className="mb-8">
-        <h2 className="text-lg font-bold uppercase tracking-wide text-gray-300 mb-3">
+        <h2 className="text-lg font-bold uppercase tracking-wide text-blue-200 mb-3">
           Your Email
         </h2>
         <input
@@ -136,25 +136,25 @@ const SubmitPicks = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="your@email.com"
-          className="w-full md:w-96 bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-400"
+          className="w-full md:w-96 bg-[#0e2040] border border-red-900 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500"
         />
       </div>
 
       {/* Tiers */}
       <div className="mb-8">
-        <h2 className="text-lg font-bold uppercase tracking-wide text-gray-300 mb-3">
+        <h2 className="text-lg font-bold uppercase tracking-wide text-blue-200 mb-3">
           Pick Your Drivers
         </h2>
 
         {tiersLoading ? (
           <div className="text-yellow-400 animate-pulse">Loading tiers...</div>
         ) : !tiersData || tiersData.length === 0 ? (
-          <div className="bg-gray-900 border border-gray-800 rounded-lg p-8 text-center">
+          <div className="bg-[#0e2040] border border-red-900 rounded-lg p-8 text-center">
             <div className="text-4xl mb-3">⏳</div>
-            <div className="text-gray-300 font-bold text-lg">
+            <div className="text-white font-bold text-lg">
               Tiers Not Set Up Yet
             </div>
-            <div className="text-gray-500 mt-2">
+            <div className="text-blue-300/50 mt-2">
               The commissioner hasn't set up the driver tiers for this race yet.
               Check back soon!
             </div>
@@ -166,7 +166,7 @@ const SubmitPicks = () => {
               .map((tier) => (
                 <div key={tier.id}>
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-bold text-yellow-400 uppercase">
+                    <h3 className="font-bold text-red-400 uppercase">
                       Tier {tier.tier_number}
                     </h3>
                     {!picks[tier.tier_number] && (

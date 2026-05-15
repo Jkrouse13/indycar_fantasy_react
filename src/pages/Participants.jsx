@@ -16,7 +16,7 @@ const Participants = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-black uppercase tracking-tight text-yellow-400 mb-6">
+      <h1 className="text-3xl font-black uppercase tracking-tight text-white mb-6">
         👥 Participants
       </h1>
 
@@ -25,11 +25,11 @@ const Participants = () => {
           <Link
             key={participant.id}
             to={`/participants/${participant.id}`}
-            className="block bg-gray-900 border border-gray-800 rounded-lg p-4 hover:border-yellow-400 transition-colors"
+            className="block bg-[#0e2040] border border-red-900 rounded-lg p-4 hover:border-red-600 transition-colors"
           >
             <div className="font-bold text-lg">{participant.name || participant.email}</div>
             {participant.name && (
-              <div className="text-gray-500 text-sm">{participant.email}</div>
+              <div className="text-blue-300/50 text-sm">{participant.email}</div>
             )}
           </Link>
         ))}

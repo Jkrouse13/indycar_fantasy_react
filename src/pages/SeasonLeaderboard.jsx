@@ -14,14 +14,14 @@ const TrendIndicator = ({ trend, amount }) => {
       ▼ <span className="text-xs">{amount}</span>
     </span>
   )
-  return <span className="text-gray-500">—</span>
+  return <span className="text-blue-300/30">—</span>
 }
 
 const PositionBadge = ({ position }) => {
   if (position === 1) return <span className="text-2xl">🥇</span>
   if (position === 2) return <span className="text-2xl">🥈</span>
   if (position === 3) return <span className="text-2xl">🥉</span>
-  return <span className="text-gray-400 font-bold text-lg w-8 text-center">{position}</span>
+  return <span className="text-blue-300 font-bold text-lg w-8 text-center">{position}</span>
 }
 
 const SeasonLeaderboard = () => {
@@ -44,17 +44,17 @@ const SeasonLeaderboard = () => {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-black uppercase tracking-tight text-yellow-400">
+        <h1 className="text-3xl font-black uppercase tracking-tight text-white">
           2026 Season Standings
         </h1>
-        <p className="text-gray-400 mt-1">
+        <p className="text-blue-300/60 mt-1">
           {data.races_counted} race{data.races_counted !== 1 ? 's' : ''} completed · Lowest score wins
         </p>
       </div>
 
       {data.leaderboard.length === 0 ? (
-        <div className="text-center py-20 text-gray-500">
-          No picks submitted yet. <Link to="/picks" className="text-yellow-400 hover:underline">Be the first!</Link>
+        <div className="text-center py-20 text-blue-300/50">
+          No picks submitted yet. <Link to="/picks" className="text-red-400 hover:underline">Be the first!</Link>
         </div>
       ) : (
         <div className="space-y-3">
@@ -64,15 +64,15 @@ const SeasonLeaderboard = () => {
               to={`/participants/${entry.participant.id}`}
               className={`flex items-start justify-between p-4 rounded-lg border ${
                 entry.position === 1
-                  ? 'bg-yellow-400/10 border-yellow-400/50'
-                  : 'bg-gray-900 border-gray-800'
-              } hover:border-yellow-400/40 transition-colors`}
+                  ? 'bg-red-900/20 border-red-700/50'
+                  : 'bg-[#0e2040] border-red-900'
+              } hover:border-red-600/60 transition-colors`}
             >
               <div className="flex items-start gap-4 min-w-0 flex-1">
                 <div className="mt-1 shrink-0"><PositionBadge position={entry.position} /></div>
                 <div className="min-w-0">
                   <div className="font-bold text-lg">{entry.participant.name}</div>
-                  <div className="text-gray-500 text-sm leading-snug">
+                  <div className="text-blue-300/50 text-sm leading-snug">
                     <div>{entry.races_entered} race{entry.races_entered !== 1 ? 's' : ''} entered</div>
                     {entry.best_finish && entry.best_finish < 999 && <div>Best race: {entry.best_finish}</div>}
                   </div>
@@ -83,9 +83,9 @@ const SeasonLeaderboard = () => {
               </div>
               <div className={`text-right shrink-0 ${entry.missed_races > 0 ? 'self-start' : 'self-center'}`}>
                 <div className="text-2xl font-black text-yellow-400">{entry.total_score}</div>
-                <div className="text-gray-500 text-xs uppercase tracking-wide">pts</div>
+                <div className="text-blue-300/50 text-xs uppercase tracking-wide">pts</div>
                 {entry.missed_races > 0 && (
-                  <div className="text-gray-600 text-xs mt-1">
+                  <div className="text-blue-300/30 text-xs mt-1">
                     +{entry.penalty_score} ({entry.missed_races} missed)
                   </div>
                 )}

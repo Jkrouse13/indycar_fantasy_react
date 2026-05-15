@@ -33,41 +33,41 @@ const ParticipantDetail = () => {
     <div>
       <Link
         to="/participants"
-        className="text-gray-400 hover:text-yellow-400 text-sm uppercase tracking-wide"
+        className="text-blue-300 hover:text-red-400 text-sm uppercase tracking-wide"
       >
         ← Back to View Picks
       </Link>
 
-      <h1 className="text-3xl font-black uppercase tracking-tight text-yellow-400 mt-4 mb-2">
+      <h1 className="text-3xl font-black uppercase tracking-tight text-white mt-4 mb-2">
         {participant?.name || participant?.email}
       </h1>
       {participant?.name && (
-        <p className="text-gray-500 mb-6">{participant?.email}</p>
+        <p className="text-blue-300/50 mb-6">{participant?.email}</p>
       )}
 
       {!participant?.races?.length ? (
-        <div className="bg-gray-900 border border-gray-800 rounded-lg p-8 text-center">
+        <div className="bg-[#0e2040] border border-red-900 rounded-lg p-8 text-center">
           <div className="text-4xl mb-3">🤷</div>
-          <div className="text-gray-400">No picks submitted yet</div>
+          <div className="text-blue-300/50">No picks submitted yet</div>
         </div>
       ) : (
         <div className="space-y-4">
           {participant.races.map(({ race, picks, total_score, rank }) => (
             <div
               key={race.id}
-              className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden"
+              className="bg-[#0e2040] border border-red-900 rounded-lg overflow-hidden"
             >
               <button
                 onClick={() => toggleRace(race.id)}
-                className="w-full p-4 flex items-center justify-between hover:bg-gray-800 transition-colors"
+                className="w-full p-4 flex items-center justify-between hover:bg-[#122550] transition-colors"
               >
                 <div className="flex items-center gap-4">
-                  <span className="text-xl">
+                  <span className="text-red-400 text-xl">
                     {expandedRaces[race.id] ? '▼' : '▶'}
                   </span>
                   <div className="text-left">
                     <div className="font-black text-lg">{race.name}</div>
-                    <div className="text-gray-500 text-sm">
+                    <div className="text-blue-300/50 text-sm">
                       {new Date(race.date).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric',
@@ -81,14 +81,14 @@ const ParticipantDetail = () => {
                       {rank && (
                         <div className="text-right">
                           <div className="text-xl font-black text-white">P{rank}</div>
-                          <div className="text-gray-500 text-xs">rank</div>
+                          <div className="text-blue-300/50 text-xs">rank</div>
                         </div>
                       )}
                       <div className="text-right">
                         <div className="text-xl font-black text-yellow-400">
                           {total_score}
                         </div>
-                        <div className="text-gray-500 text-xs">score</div>
+                        <div className="text-blue-300/50 text-xs">score</div>
                       </div>
                     </div>
                   )}
@@ -97,8 +97,8 @@ const ParticipantDetail = () => {
                       race.status === 'final'
                         ? 'bg-green-900 text-green-400'
                         : race.status === 'live'
-                          ? 'bg-yellow-900 text-yellow-400'
-                          : 'bg-gray-800 text-gray-400'
+                          ? 'bg-red-900 text-red-400'
+                          : 'bg-[#071428] border border-red-900 text-blue-300'
                     }`}
                   >
                     {race.status}

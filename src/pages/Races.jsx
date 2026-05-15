@@ -4,7 +4,7 @@ import { getRaces } from '../api/client'
 
 const statusBadge = (status) => {
   if (status === 'live') return <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded uppercase animate-pulse">● Live</span>
-  if (status === 'final') return <span className="bg-gray-700 text-gray-300 text-xs font-bold px-2 py-1 rounded uppercase">Final</span>
+  if (status === 'final') return <span className="bg-[#0e2040] border border-blue-900 text-blue-300 text-xs font-bold px-2 py-1 rounded uppercase">Final</span>
   return <span className="bg-yellow-400/20 text-yellow-400 text-xs font-bold px-2 py-1 rounded uppercase">Upcoming</span>
 }
 
@@ -29,11 +29,11 @@ const Races = () => {
   const upcoming = data.filter(r => r.status === 'upcoming')
 
   const RaceCard = ({ race }) => (
-    <div className="flex items-center justify-between p-4 bg-gray-900 border border-gray-800 rounded-lg hover:border-yellow-400/50 transition-colors">
+    <div className="flex items-center justify-between p-4 bg-[#0e2040] border border-red-900 rounded-lg hover:border-red-600/50 transition-colors">
       <div>
         <div className="font-bold text-lg">{race.name}</div>
-        <div className="text-gray-400 text-sm mt-1">🏟️ {race.track}</div>
-        <div className="text-gray-500 text-sm">
+        <div className="text-blue-300/60 text-sm mt-1">🏟️ {race.track}</div>
+        <div className="text-blue-300/40 text-sm">
           📅 {new Date(race.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
         </div>
       </div>
@@ -42,7 +42,7 @@ const Races = () => {
         {race.status === 'final' && (
           <Link
             to={`/races/${race.id}`}
-            className="text-yellow-400 text-sm font-bold hover:underline"
+            className="text-red-400 text-sm font-bold hover:underline"
           >
             View Results →
           </Link>
@@ -50,7 +50,7 @@ const Races = () => {
         {race.status === 'upcoming' && (
           <Link
             to="/picks"
-            className="text-yellow-400 text-sm font-bold hover:underline"
+            className="text-red-400 text-sm font-bold hover:underline"
           >
             Make Picks →
           </Link>
@@ -61,7 +61,7 @@ const Races = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-black uppercase tracking-tight text-yellow-400 mb-8">
+      <h1 className="text-3xl font-black uppercase tracking-tight text-white mb-8">
         2026 Race Schedule
       </h1>
 
@@ -76,7 +76,7 @@ const Races = () => {
 
       {upcoming.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-gray-400 font-bold uppercase tracking-wide mb-3">Upcoming</h2>
+          <h2 className="text-blue-300/60 font-bold uppercase tracking-wide mb-3">Upcoming</h2>
           <div className="space-y-3">
             {upcoming.map(race => <RaceCard key={race.id} race={race} />)}
           </div>
@@ -85,7 +85,7 @@ const Races = () => {
 
       {completed.length > 0 && (
         <div>
-          <h2 className="text-gray-400 font-bold uppercase tracking-wide mb-3">Completed</h2>
+          <h2 className="text-blue-300/60 font-bold uppercase tracking-wide mb-3">Completed</h2>
           <div className="space-y-3">
             {completed.map(race => <RaceCard key={race.id} race={race} />)}
           </div>

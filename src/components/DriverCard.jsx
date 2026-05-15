@@ -33,14 +33,14 @@ const DriverCard = ({
         borderLeft: `4px solid ${driver.primary_color}`,
         ...cardStyles,
       }}
-      className={`bg-gray-800 rounded p-2 text-left ${
+      className={`bg-[#0e2040] rounded p-2 text-left ${
         onClick
-          ? `w-full border transition-colors ${selected ? '' : 'border-gray-800 hover:border-gray-600'}`
+          ? `w-full border transition-colors ${selected ? '' : 'border-red-900/50 hover:border-red-700'}`
           : ''
       }`}
     >
       {tier && (
-        <div className="text-gray-500 text-xs uppercase mb-1">Tier {tier}</div>
+        <div className="text-blue-300/50 text-xs uppercase mb-1">Tier {tier}</div>
       )}
       <div className="flex items-center gap-2">
         <CarImage
@@ -59,7 +59,7 @@ const DriverCard = ({
             />
             <div className="font-bold text-sm truncate">{driver.name}</div>
           </div>
-          <div className="text-gray-400 text-xs truncate">
+          <div className="text-blue-200/50 text-xs truncate">
             #{driver.car_number} • {driver.team_name}
           </div>
         </div>

@@ -25,7 +25,7 @@ const Navbar = () => {
   ]
 
   return (
-    <nav className="bg-black border-b-4 border-yellow-400">
+    <nav className="bg-[#071428] border-b-4 border-red-700">
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-2xl">🏎️</span>
@@ -42,8 +42,8 @@ const Navbar = () => {
               to={link.to}
               className={`font-bold text-sm uppercase tracking-wide transition-colors ${
                 location.pathname === link.to
-                  ? 'text-yellow-400'
-                  : 'text-gray-300 hover:text-yellow-400'
+                  ? 'text-red-400'
+                  : 'text-blue-200 hover:text-red-400'
               }`}
             >
               {link.label}
@@ -62,7 +62,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-gray-900 border-t border-gray-800 px-4 py-2">
+        <div className="md:hidden bg-[#0e2040] border-t border-red-900 px-4 py-2">
           {navLinks.map(link => (
             <Link
               key={link.to}
@@ -70,8 +70,8 @@ const Navbar = () => {
               onClick={() => setMenuOpen(false)}
               className={`block py-3 font-bold text-sm uppercase tracking-wide transition-colors ${
                 location.pathname === link.to
-                  ? 'text-yellow-400'
-                  : 'text-gray-300 hover:text-yellow-400'
+                  ? 'text-red-400'
+                  : 'text-blue-200 hover:text-red-400'
               }`}
             >
               {link.label}
@@ -84,11 +84,8 @@ const Navbar = () => {
 }
 
 const App = () => {
-  const location = useLocation()
-  const is500Route = location.pathname.startsWith('/qualifying') || location.pathname.startsWith('/pool')
-
   return (
-    <div className={`min-h-screen text-white ${is500Route ? 'bg-[#071428]' : 'bg-gray-950'}`}>
+    <div className="min-h-screen bg-[#071428] text-white">
       <Navbar />
       <main className="max-w-5xl mx-auto px-4 py-8">
         <Routes>
