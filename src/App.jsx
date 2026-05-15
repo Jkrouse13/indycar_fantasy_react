@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useLocation } from 'react-router-dom'
+import { Routes, Route, Link, Outlet, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import SeasonLeaderboard from './pages/SeasonLeaderboard'
 import RaceLeaderboard from './pages/RaceLeaderboard'
@@ -83,24 +83,83 @@ const Navbar = () => {
   )
 }
 
-const App = () => {
+const AppLayout = () => (
+  <div className="min-h-screen bg-[#071428] text-white">
+    <Navbar />
+    <main className="max-w-5xl mx-auto px-4 py-8">
+      <Outlet />
+    </main>
+  </div>
+)
+
+const QualifyingLayout = () => {
+  const location = useLocation()
+
   return (
     <div className="min-h-screen bg-[#071428] text-white">
-      <Navbar />
+      <nav className="bg-[#071428] border-b-4 border-red-700">
+        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">🏎️</span>
+            <span className="text-yellow-400 font-black text-xl tracking-tight uppercase">
+              IndyCar Fantasy — Qualifying
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Link
+              to="/qualifying"
+              className={`font-bold text-sm uppercase tracking-wide transition-colors ${
+                location.pathname === '/qualifying'
+                  ? 'text-red-400'
+                  : 'text-blue-200 hover:text-red-400'
+              }`}
+            >
+              ⚡ Picks
+            </Link>
+            <Link
+              to="/qualifying/leaderboard"
+              className={`font-bold text-sm uppercase tracking-wide transition-colors ${
+                location.pathname === '/qualifying/leaderboard'
+                  ? 'text-red-400'
+                  : 'text-blue-200 hover:text-red-400'
+              }`}
+            >
+              🏆 Leaderboard
+            </Link>
+            <Link
+              to="/"
+              className="text-blue-400 hover:text-blue-200 text-sm transition-colors"
+            >
+              ← Full App
+            </Link>
+          </div>
+        </div>
+      </nav>
       <main className="max-w-5xl mx-auto px-4 py-8">
-        <Routes>
-          <Route path="/" element={<SeasonLeaderboard />} />
-          <Route path="/races" element={<Races />} />
-          <Route path="/races/:id" element={<RaceLeaderboard />} />
-          <Route path="/picks" element={<SubmitPicks />} />
-          <Route path="/participants" element={<Participants />} />
-          <Route path="/participants/:id" element={<ParticipantDetail />} />
-          <Route path="/qualifying" element={<QualifyingPicksPage />} />
-          <Route path="/qualifying/leaderboard" element={<QualifyingLeaderboardPage />} />
-          <Route path="/pool" element={<DriverPoolPage />} />
-        </Routes>
+        <Outlet />
       </main>
     </div>
+  )
+}
+
+const App = () => {
+  return (
+    <Routes>
+      <Route element={<QualifyingLayout />}>
+        <Route path="/qualifying" element={<QualifyingPicksPage />} />
+        <Route path="/qualifying/leaderboard" element={<QualifyingLeaderboardPage />} />
+      </Route>
+      <Route element={<AppLayout />}>
+        <Route path="/" element={<SeasonLeaderboard />} />
+        <Route path="/races" element={<Races />} />
+        <Route path="/races/:id" element={<RaceLeaderboard />} />
+        <Route path="/picks" element={<SubmitPicks />} />
+        <Route path="/participants" element={<Participants />} />
+        <Route path="/participants/:id" element={<ParticipantDetail />} />
+        <Route path="/pool" element={<DriverPoolPage />} />
+      </Route>
+    </Routes>
   )
 }
 
