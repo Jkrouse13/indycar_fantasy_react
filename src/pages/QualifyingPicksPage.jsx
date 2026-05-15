@@ -125,8 +125,19 @@ const QualifyingPicksPage = () => {
         },
       }
 
-      return existingId
-        ? updateQualifyingPrediction(existingId, payload)
+      let predId = existingId
+      if (!predId) {
+        try {
+          const pred = await getQualifyingPrediction(participantId, YEAR).then(r => r.data)
+          predId = pred.id
+          setExistingId(pred.id)
+        } catch {
+          // no existing prediction — will create
+        }
+      }
+
+      return predId
+        ? updateQualifyingPrediction(predId, payload)
         : submitQualifyingPrediction(payload)
     },
     onSuccess: (res) => {

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { getParticipants } from '../api/client'
+import { displayName } from '../utils/participant'
 
 const Participants = () => {
   const { data: participants, isLoading } = useQuery({
@@ -21,13 +22,13 @@ const Participants = () => {
       </h1>
 
       <div className="space-y-2">
-        {participants?.sort((a, b) => a.name?.localeCompare(b.name)).map(participant => (
+        {participants?.sort((a, b) => displayName(a).localeCompare(displayName(b))).map(participant => (
           <Link
             key={participant.id}
             to={`/participants/${participant.id}`}
             className="block bg-[#0e2040] border border-red-900 rounded-lg p-4 hover:border-red-600 transition-colors"
           >
-            <div className="font-bold text-lg">{participant.name || participant.email}</div>
+            <div className="font-bold text-lg">{displayName(participant)}</div>
             {participant.name && (
               <div className="text-blue-300/50 text-sm">{participant.email}</div>
             )}

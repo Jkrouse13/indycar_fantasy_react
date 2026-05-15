@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams, Link } from 'react-router-dom'
 import { getRaceLeaderboard } from '../api/client'
 import DriverCard from '../components/DriverCard'
+import { displayName } from '../utils/participant'
 
 const PositionBadge = ({ position }) => {
   if (position === 1) return <span className="text-2xl">🥇</span>
@@ -99,7 +100,7 @@ const RaceLeaderboard = () => {
                 <div className="flex items-center gap-4">
                   <PositionBadge position={index + 1} />
                   <div className="font-bold text-lg">
-                    {entry.participant.name}
+                    {displayName(entry.participant)}
                   </div>
                 </div>
                 <div className="text-right">

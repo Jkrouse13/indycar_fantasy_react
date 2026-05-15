@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { getSeasonLeaderboard } from '../api/client'
+import { displayName } from '../utils/participant'
 
 const TrendIndicator = ({ trend, amount }) => {
   if (trend === 'new') return <span className="text-blue-400 text-xs font-bold">NEW</span>
@@ -71,7 +72,7 @@ const SeasonLeaderboard = () => {
               <div className="flex items-start gap-4 min-w-0 flex-1">
                 <div className="mt-1 shrink-0"><PositionBadge position={entry.position} /></div>
                 <div className="min-w-0">
-                  <div className="font-bold text-lg">{entry.participant.name}</div>
+                  <div className="font-bold text-lg">{displayName(entry.participant)}</div>
                   <div className="text-blue-300/50 text-sm leading-snug">
                     <div>{entry.races_entered} race{entry.races_entered !== 1 ? 's' : ''} entered</div>
                     {entry.best_finish && entry.best_finish < 999 && <div>Best race: {entry.best_finish}</div>}

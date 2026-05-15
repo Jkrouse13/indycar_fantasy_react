@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams, Link } from 'react-router-dom'
 import { getParticipant } from '../api/client'
 import DriverCard from '../components/DriverCard'
+import { displayName } from '../utils/participant'
 
 const ParticipantDetail = () => {
   const { id } = useParams()
@@ -39,7 +40,7 @@ const ParticipantDetail = () => {
       </Link>
 
       <h1 className="text-3xl font-black uppercase tracking-tight text-white mt-4 mb-2">
-        {participant?.name || participant?.email}
+        {displayName(participant)}
       </h1>
       {participant?.name && (
         <p className="text-blue-300/50 mb-6">{participant?.email}</p>

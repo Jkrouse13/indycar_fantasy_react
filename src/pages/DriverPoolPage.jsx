@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getPoolEntries } from '../api/client'
+import { displayName } from '../utils/participant'
 
 const YEAR = 2026
 
@@ -18,8 +19,6 @@ const AcquisitionBadge = ({ type }) =>
 const driverLabel = (driver) =>
   driver ? `#${driver.car_number} ${driver.name}` : '—'
 
-const participantLabel = (participant) =>
-  participant?.name || participant?.email || '—'
 
 const AllDriversTab = ({ entries }) => {
   const sorted = [...entries].sort((a, b) => {
@@ -43,7 +42,7 @@ const AllDriversTab = ({ entries }) => {
           {sorted.map((entry) => (
             <tr key={entry.id} className="border-b border-red-900/30 hover:bg-[#0e2040]/80 transition-colors">
               <td className="px-4 py-3 font-bold">{driverLabel(entry.driver)}</td>
-              <td className="px-4 py-3 text-gray-300">{participantLabel(entry.participant)}</td>
+              <td className="px-4 py-3 text-gray-300">{displayName(entry.participant)}</td>
               <td className="px-4 py-3">
                 <AcquisitionBadge type={entry.acquisition_type} />
               </td>
@@ -68,7 +67,7 @@ const ByParticipantTab = ({ entries }) => {
   }, {})
 
   const groups = Object.values(byParticipant).sort((a, b) =>
-    participantLabel(a.participant).localeCompare(participantLabel(b.participant))
+    displayName(a.participant).localeCompare(displayName(b.participant))
   )
 
   const toggle = (id) => setExpanded(prev => ({ ...prev, [id]: !prev[id] }))
@@ -93,7 +92,7 @@ const ByParticipantTab = ({ entries }) => {
               <div className="flex items-center gap-3">
                 <span className="text-red-400 text-lg">{isOpen ? '▼' : '▶'}</span>
                 <div className="text-left">
-                  <div className="font-black text-lg">{participantLabel(participant)}</div>
+                  <div className="font-black text-lg">{displayName(participant)}</div>
                   <div className="flex items-center gap-2 mt-0.5">
                     <span className="text-xs text-blue-300">{pEntries.length} driver{pEntries.length !== 1 ? 's' : ''}</span>
                     {auctionCount > 0 && (
