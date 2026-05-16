@@ -11,7 +11,7 @@ import {
 } from '../api/client'
 import DriverCard from '../components/DriverCard'
 
-const LOCKOUT = new Date('2026-05-16T11:00:00-04:00')
+const LOCKOUT = new Date('2026-05-16T15:00:00-04:00')
 const YEAR = 2026
 
 const CountdownBanner = () => {
@@ -35,7 +35,7 @@ const CountdownBanner = () => {
   return (
     <div className="mb-6">
       <div className={`text-center py-2 px-4 rounded-lg text-sm font-bold uppercase tracking-wide ${locked ? 'bg-red-900 text-red-300' : 'bg-red-900/40 text-yellow-400'}`}>
-        {locked ? 'Picks Locked — Qualifying has started' : `Locks in ${timeLeft} (11:00 AM ET Sat May 16)`}
+        {locked ? 'Picks Locked — Qualifying has started' : `Locks in ${timeLeft} (3:00 PM ET Sat May 16)`}
       </div>
       {locked && (
         <div className="text-center mt-3">
