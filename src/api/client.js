@@ -30,5 +30,6 @@ export const getQualifyingResult = (year = 2026) =>
 
 export const getPoolEntries = (year = 2026) =>
   client.get(`/pool_entries?year=${year}`)
+export const createPoolEntry = (data) => client.post('/pool_entries', data)
 
 export default client

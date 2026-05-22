@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getPoolEntries } from '../api/client'
 import { displayName } from '../utils/participant'
@@ -160,7 +161,15 @@ const DriverPoolPage = () => {
       <h1 className="text-3xl font-black uppercase tracking-tight text-white text-center mb-1">
         Driver Pool
       </h1>
-      <p className="text-red-400 text-sm text-center mb-6 font-bold uppercase tracking-widest">{YEAR} Indy 500</p>
+      <p className="text-red-400 text-sm text-center mb-4 font-bold uppercase tracking-widest">{YEAR} Indy 500</p>
+      <div className="flex justify-center mb-6">
+        <Link
+          to="/pool/add"
+          className="px-5 py-2 bg-yellow-400 text-black font-black uppercase text-sm rounded-lg hover:bg-yellow-300 transition-colors"
+        >
+          + Add Entry
+        </Link>
+      </div>
 
       {entries.length > 0 && (
         <div className="grid grid-cols-3 gap-3 mb-6">

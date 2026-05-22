@@ -9,6 +9,7 @@ import ParticipantDetail from './pages/ParticipantDetail'
 import QualifyingPicksPage from './pages/QualifyingPicksPage'
 import QualifyingLeaderboardPage from './pages/QualifyingLeaderboardPage'
 import DriverPoolPage from './pages/DriverPoolPage'
+import AddPoolEntryPage from './pages/AddPoolEntryPage'
 
 const Navbar = () => {
   const location = useLocation()
@@ -158,6 +159,7 @@ const App = () => {
         <Route path="/participants" element={<Participants />} />
         <Route path="/participants/:id" element={<ParticipantDetail />} />
         <Route path="/pool" element={<DriverPoolPage />} />
+        <Route path="/pool/add" element={<AddPoolEntryPage />} />
       </Route>
     </Routes>
   )
