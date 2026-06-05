@@ -16,6 +16,12 @@ export const createParticipant = (email) =>
   client.post('/participants', { participant: { email } })
 
 export const getDrivers = () => client.get('/drivers')
+export const createRaceTier = (raceId, tierNumber) =>
+  client.post(`/races/${raceId}/race_tiers`, { race_tier: { tier_number: tierNumber, driver_ids: [] } })
+export const updateRaceTierDrivers = (tierId, driverIds) =>
+  client.patch(`/race_tiers/${tierId}`, { race_tier: { driver_ids: driverIds } })
+export const deleteRaceTier = (tierId) =>
+  client.delete(`/race_tiers/${tierId}`)
 
 export const getQualifyingPredictions = (year = 2026) =>
   client.get(`/qualifying_predictions?year=${year}`)

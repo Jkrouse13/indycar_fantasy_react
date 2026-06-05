@@ -10,6 +10,7 @@ import QualifyingPicksPage from './pages/QualifyingPicksPage'
 import QualifyingLeaderboardPage from './pages/QualifyingLeaderboardPage'
 import DriverPoolPage from './pages/DriverPoolPage'
 import AddPoolEntryPage from './pages/AddPoolEntryPage'
+import AdminTiersPage from './pages/AdminTiersPage'
 
 const Navbar = () => {
   const location = useLocation()
@@ -20,9 +21,10 @@ const Navbar = () => {
     { to: '/races', label: '🏁 Races' },
     { to: '/picks', label: '🎯 Submit Picks' },
     { to: '/participants', label: '👀 View Picks' },
-    { to: '/qualifying', label: '⚡ Qual Picks' },
-    { to: '/qualifying/leaderboard', label: '⚡ Qual Standings' },
-    { to: '/pool', label: '🎰 Driver Pool' },
+    // { to: '/qualifying', label: '⚡ Qual Picks' },
+    // { to: '/qualifying/leaderboard', label: '⚡ Qual Standings' },
+    // { to: '/pool', label: '🎰 Driver Pool' },
+    { to: '/admin/tiers', label: '⚙️ Manage Tiers' },
   ]
 
   return (
@@ -160,6 +162,7 @@ const App = () => {
         <Route path="/participants/:id" element={<ParticipantDetail />} />
         <Route path="/pool" element={<DriverPoolPage />} />
         <Route path="/pool/add" element={<AddPoolEntryPage />} />
+        <Route path="/admin/tiers" element={<AdminTiersPage />} />
       </Route>
     </Routes>
   )
